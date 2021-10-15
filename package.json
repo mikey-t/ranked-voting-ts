@@ -17,10 +17,12 @@
     ],
     "exclude": [
       "**/*.d.ts",
-      "./test"
+      "./test",
+      "src/index.ts"
     ],
     "reporter": [
-      "html"
+      "html",
+      "text"
     ],
     "all": true
   },
