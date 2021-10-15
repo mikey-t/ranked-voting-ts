@@ -36,7 +36,7 @@ export class VoteController {
         console.log('Num voters: ' + this.allVoteLists.length)
         console.log(this.options)
     }
-    
+
     private getIndexedOptions(): {[key: string]: VoteOption} {
         let indexedOptions: {[key: string]: VoteOption} = {}
         for (let option of this.options) {
