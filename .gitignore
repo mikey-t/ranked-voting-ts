@@ -1,2 +1,6 @@
 node_modules/**
 dist/**
+coverage/**
+.nyc_output
+test/**/*.spec.js
+test/**/*.spec.js.map

@@ -11,9 +11,6 @@ export class VoteTestUtil {
     }
 
     configure(minUserVotes: number, maxUserVotes: number, numVoters: number): void {
-        if (minUserVotes === undefined || maxUserVotes === undefined) {
-            throw new Error('minUserVotes and maxUserVotes are required')
-        }
         if (minUserVotes > maxUserVotes) {
             throw new Error('minUserVotes must be less than maxUserVotes')
         }
