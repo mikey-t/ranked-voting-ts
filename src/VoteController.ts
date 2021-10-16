@@ -1,44 +1,57 @@
-import { VoteList, VoteOption } from './models'
+import { FinalResult, StageResult, UserVotes, VoteOption } from './models'
 
 export class VoteController {
-    private allVoteLists: VoteList[] = []
-    
+    originalVotes: UserVotes[] = []
+
     constructor(public options: VoteOption[]) {
         if (!options || options.length <= 0) {
             throw new Error('options are required')
         }
     }
 
-    acceptUserVoteList(voteList: VoteList): void {
-        this.allVoteLists.push(voteList)
+    acceptUserVotes(userVotes: UserVotes): void {
+        this.originalVotes.push(userVotes)
     }
 
-    acceptPopulationVotes(allVotes: VoteList[]): void {
-        for (let voteList of allVotes) {
-            this.acceptUserVoteList(voteList)
+    acceptPopulationVotes(allVotes: UserVotes[]): void {
+        for (let userVotes of allVotes) {
+            this.acceptUserVotes(userVotes)
         }
     }
-    
-    calculateResult(): void {
-        let indexedOptions = this.getIndexedOptions()
-        console.log('indexedOptions: ', indexedOptions)
-        for (let voteList of this.allVoteLists) {
-            // For each vote, add vote to associated VoteOption and pass which rank
-            for (let i = 0; i < voteList.votes.length; i++) {
-                let voteRank = i
-                let voteOptionName = voteList.votes[i]
-                indexedOptions[voteOptionName].addVote(voteRank)
+
+    getFinalResult(): FinalResult {
+        let finalResult = new FinalResult()
+        finalResult.totalNumVoters = this.originalVotes.length
+
+        let stageResult = this.getStageResult(this.originalVotes)
+
+        // If done check here
+        // If not done, create new votes list and get next stage
+
+
+        return finalResult
+    }
+
+    getStageResult(allUserVotes: UserVotes[]): StageResult {
+        let stageResult = new StageResult(this.options)
+
+        for (let userVotes of allUserVotes) {
+            for (let i = 0; i < userVotes.orderedVoteOptions.length; i++) {
+                stageResult.optionRankedVoteCounts[userVotes.orderedVoteOptions[i]].addVote(i)
             }
         }
+
+        return stageResult
     }
 
-    outputResult() {
-        console.log('Num voters: ' + this.allVoteLists.length)
-        console.log(this.options)
+    getStageResultWinner(stageResult: StageResult): string | null {
+        let firstRankVoteCounts = []
+        // TODO: left off here 
+        return null
     }
 
-    private getIndexedOptions(): {[key: string]: VoteOption} {
-        let indexedOptions: {[key: string]: VoteOption} = {}
+    private getIndexedOptions(): { [key: string]: VoteOption } {
+        let indexedOptions: { [key: string]: VoteOption } = {}
         for (let option of this.options) {
             indexedOptions[option.name] = option
         }

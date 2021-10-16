@@ -18,8 +18,10 @@ const testVotes = testUtil.getPopulationTestVotes()
 controller.acceptPopulationVotes(testVotes)
 
 console.log('calculating result...')
-controller.calculateResult()
+let finalResult = controller.getFinalResult()
 
-controller.outputResult()
+console.log('Final result: ', finalResult)
+
+// controller.outputResult()
 
 console.log('\ndone')

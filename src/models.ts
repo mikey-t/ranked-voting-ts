@@ -1,25 +1,39 @@
 export class VoteOption {
-    private rankedVoteCounts: RankVoteCountDict = {}
-    
-    constructor(public name: string) {
-    }
-    
-    getRankedVoteCounts(): RankVoteCountDict {
-        return this.rankedVoteCounts
-    }
-    
-    addVote(rank: number) {
-        if (this.rankedVoteCounts[rank]) {
-            this.rankedVoteCounts[rank]++
+    constructor(public name: string) { }
+}
+
+export class UserVotes {
+    orderedVoteOptions: string[] = []
+}
+
+export class RankedVoteCounts {
+    voteCounts: number[] = []
+
+    constructor(numOptions: number) {
+        for (let i = 0; i < numOptions; i++) {
+            this.voteCounts.push(0)
         }
-        else {
-            this.rankedVoteCounts[rank] = 1
+    }
+
+    addVote(rank: number): void {
+        this.voteCounts[rank]++
+    }
+}
+
+type OptionNameToVoteCountsDict = { [key: string]: RankedVoteCounts }
+
+export class StageResult {
+    optionRankedVoteCounts: OptionNameToVoteCountsDict = {}
+
+    constructor(voteOptions: VoteOption[]) {
+        for (let voteOption of voteOptions) {
+            this.optionRankedVoteCounts[voteOption.name] = new RankedVoteCounts(voteOptions.length)
         }
     }
 }
 
-export class VoteList {
-    votes: string[] = []
+export class FinalResult {
+    totalNumVoters = 0
+    stageResults: StageResult[] = []
+    winner: string | null = null
 }
-
-type RankVoteCountDict = {[key: number]: number}
