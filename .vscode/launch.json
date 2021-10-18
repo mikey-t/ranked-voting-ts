@@ -11,10 +11,27 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\dist\\index.js",
+            "program": "${workspaceFolder}\\dist\\src\\index.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Current File Mocha Tests",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": [
+              "--no-timeouts",
+              "--colors",
+              "**/${fileBasenameNoExtension}.js"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "openDebug": "openOnDebugBreak",
+            "sourceMaps": true,
+            "outFiles": [
+              "${workspaceFolder}/dist/**/*.js"
+            ]
+          }
     ]
 }

@@ -14,7 +14,7 @@ const testUtil = new VoteTestUtil(controller)
 testUtil.configure(1, 4, 500)
 
 console.log('gathering test votes...')
-const testVotes = testUtil.getPopulationTestVotes()
+const testVotes = testUtil.getPopulationTestUserVotes()
 controller.acceptPopulationVotes(testVotes)
 
 console.log('calculating result...')

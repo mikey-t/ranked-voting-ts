@@ -37,16 +37,22 @@ export class VoteController {
 
         for (let userVotes of allUserVotes) {
             for (let i = 0; i < userVotes.orderedVoteOptions.length; i++) {
-                stageResult.optionRankedVoteCounts[userVotes.orderedVoteOptions[i]].addVote(i)
+                stageResult.rankedVoteCounts[userVotes.orderedVoteOptions[i]].addVote(i)
             }
         }
 
         return stageResult
     }
 
-    getStageResultWinner(stageResult: StageResult): string | null {
-        let firstRankVoteCounts = []
-        // TODO: left off here 
+    getStageWinner(stageResult: StageResult): string | null {
+        let firstRankVoteCounts: {[key: string]: number}
+
+        for (let optionVoteCounts in stageResult.rankedVoteCounts) {
+            console.log(optionVoteCounts)
+        }
+
+        // TODO: left off here and in unit test
+
         return null
     }
 

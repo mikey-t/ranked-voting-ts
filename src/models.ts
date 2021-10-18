@@ -7,15 +7,23 @@ export class UserVotes {
 }
 
 export class RankedVoteCounts {
+    numOptions
     voteCounts: number[] = []
 
     constructor(numOptions: number) {
+        if (numOptions < 0) {
+            throw new Error('numOptions must be >= 0')
+        }
+        this.numOptions = numOptions
         for (let i = 0; i < numOptions; i++) {
             this.voteCounts.push(0)
         }
     }
 
     addVote(rank: number): void {
+        if (rank < 0 || rank >= this.numOptions) {
+            throw new Error('vote rank must be >= 0 && < total options')
+        }
         this.voteCounts[rank]++
     }
 }
@@ -23,11 +31,11 @@ export class RankedVoteCounts {
 type OptionNameToVoteCountsDict = { [key: string]: RankedVoteCounts }
 
 export class StageResult {
-    optionRankedVoteCounts: OptionNameToVoteCountsDict = {}
+    rankedVoteCounts: OptionNameToVoteCountsDict = {}
 
     constructor(voteOptions: VoteOption[]) {
         for (let voteOption of voteOptions) {
-            this.optionRankedVoteCounts[voteOption.name] = new RankedVoteCounts(voteOptions.length)
+            this.rankedVoteCounts[voteOption.name] = new RankedVoteCounts(voteOptions.length)
         }
     }
 }

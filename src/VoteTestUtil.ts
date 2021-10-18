@@ -1,4 +1,4 @@
-import { VoteList } from './models'
+import { UserVotes } from './models'
 import { VoteController } from './VoteController'
 
 export class VoteTestUtil {
@@ -27,8 +27,8 @@ export class VoteTestUtil {
         this.maxUserVotes = maxUserVotes
     }
 
-    getRandomVoteList(): VoteList {
-        const voteList = new VoteList()
+    getRandomUserVotes(): UserVotes {
+        const userVotes = new UserVotes()
 
         const numVotes = this.getRandomInt(this.minUserVotes, this.maxUserVotes)
 
@@ -37,17 +37,17 @@ export class VoteTestUtil {
 
         for (let i = 0; i < numVotes; i++) {
             const choiceIndex = this.getRandomInt(0, possibleOptions.length - 1)
-            voteList.votes.push(possibleOptions[choiceIndex])
+            userVotes.orderedVoteOptions.push(possibleOptions[choiceIndex])
             possibleOptions.splice(choiceIndex, 1)
         }
 
-        return voteList
+        return userVotes
     }
 
-    getPopulationTestVotes(): VoteList[] {
-        let allVotes: VoteList[] = []
+    getPopulationTestUserVotes(): UserVotes[] {
+        let allVotes: UserVotes[] = []
         for (let i = 0; i < this.numVoters; i++) {
-            allVotes.push(this.getRandomVoteList())
+            allVotes.push(this.getRandomUserVotes())
         }
         return allVotes
     }
