@@ -4,6 +4,10 @@ export class VoteOption {
 
 export class UserVotes {
     orderedVoteOptions: string[] = []
+    
+    constructor(orderedVoteOptions: string[] = []) {
+        this.orderedVoteOptions = orderedVoteOptions
+    }
 }
 
 export class RankedVoteCounts {
@@ -28,9 +32,10 @@ export class RankedVoteCounts {
     }
 }
 
-type OptionNameToVoteCountsDict = { [key: string]: RankedVoteCounts }
+export type OptionNameToVoteCountsDict = { [key: string]: RankedVoteCounts }
 
 export class StageResult {
+    userVotes: UserVotes[] = []
     rankedVoteCounts: OptionNameToVoteCountsDict = {}
 
     constructor(voteOptions: VoteOption[]) {
@@ -44,4 +49,5 @@ export class FinalResult {
     totalNumVoters = 0
     stageResults: StageResult[] = []
     winner: string | null = null
+    tieOptions: string[] | null = null
 }

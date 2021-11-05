@@ -1,7 +1,7 @@
 import { UserVotes } from './models'
 import { VoteController } from './VoteController'
 
-export class VoteTestUtil {
+export class VoteSimUtil {
     private numVoters: number = 100
     private minUserVotes: number = 1
     private maxUserVotes: number = 0

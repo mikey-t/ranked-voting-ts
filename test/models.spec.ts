@@ -1,7 +1,18 @@
 import { assert } from 'chai'
 import { FinalResult, RankedVoteCounts, UserVotes } from '../src/models'
+import { VoteOption } from './../src/models'
 
 describe('Model tests', function() {
+    describe('VoteOption model', function(){
+        describe('VoteOption ctor', function() {
+            it('initializes with name param', function() {
+                const expectedName = 'expected'
+                let voteOption = new VoteOption(expectedName)
+                assert.equal(voteOption.name, expectedName)
+            })
+        })
+    })
+    
     describe('UserVotes model', function() {
         describe('UserVotes ctor', function() {
             it('initializes orderedVoteOptions to empty array', function() {

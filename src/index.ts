@@ -1,6 +1,6 @@
 import { VoteController } from './VoteController'
 import { VoteOption } from './models'
-import { VoteTestUtil } from './VoteTestUtil'
+import { VoteSimUtil } from './VoteSimUtil'
 
 console.log('\nRanked voting simulation\n')
 
@@ -10,7 +10,7 @@ const controller = new VoteController([
     new VoteOption('cherries'),
     new VoteOption('peaches')])
 
-const testUtil = new VoteTestUtil(controller)
+const testUtil = new VoteSimUtil(controller)
 testUtil.configure(1, 4, 500)
 
 console.log('gathering test votes...')

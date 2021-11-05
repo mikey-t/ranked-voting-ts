@@ -1,19 +1,19 @@
 import { assert } from 'chai'
 import { VoteOption } from '../src/models'
 import { VoteController } from '../src/VoteController'
-import { VoteTestUtil } from '../src/VoteTestUtil'
+import { VoteSimUtil } from '../src/VoteSimUtil'
 
 var voteController = new VoteController([new VoteOption('whatever')])
-var voteTestUtil = new VoteTestUtil(voteController)
+var voteSimUtil = new VoteSimUtil(voteController)
 
 beforeEach(function() {
-    voteTestUtil = new VoteTestUtil(voteController)
+    voteSimUtil = new VoteSimUtil(voteController)
 })
 
-describe('VoteTestUtil', function(){
+describe('VoteSimUtil', function(){
     describe('configure', function() {
         it('throws if minUserVotes is greater than maxUserVotes', function() {
-            assert.throws(() => voteTestUtil.configure(5, 4 ,42), 'minUserVotes must be less than maxUserVotes')
+            assert.throws(() => voteSimUtil.configure(5, 4 ,42), 'minUserVotes must be less than maxUserVotes')
         })
     })
 })
