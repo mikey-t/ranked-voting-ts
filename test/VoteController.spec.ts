@@ -242,28 +242,28 @@ describe('VoteController', function () {
         it('returns true of same options in same order', function () {
             let optionsA = [RED, GREEN]
             let optionsB = [RED, GREEN]
-            
+
             assert.isTrue(voteController.sameOptions(optionsA, optionsB))
         })
-        
+
         it('returns true of same options in different order', function () {
             let optionsA = [RED, GREEN]
             let optionsB = [GREEN, RED]
-            
+
             assert.isTrue(voteController.sameOptions(optionsA, optionsB))
         })
 
         it('returns false if different options', function () {
             let optionsA = [RED, GREEN]
             let optionsB = [RED, BLUE]
-            
+
             assert.isFalse(voteController.sameOptions(optionsA, optionsB))
         })
-        
+
         it('returns false if different number of options', function () {
             let optionsA = [RED, GREEN]
             let optionsB = [RED, GREEN, BLUE]
-            
+
             assert.isFalse(voteController.sameOptions(optionsA, optionsB))
         })
     })
@@ -300,9 +300,19 @@ describe('VoteController', function () {
             assert.sameMembers(result.tieOptions as string[], [RED, GREEN])
         })
 
-        // TODO:
-        // - Various tie scenarios
-        // - Winner where tie-breaker logic applies
-        // - Various winners scenarios, checking intermediate stage results
+        it('returns winner when tie-breaker is possible', function () {
+            let userVotesArray = [
+                new UserVotes([RED, BLUE, GREEN]),
+                new UserVotes([RED, BLUE]),
+                new UserVotes([BLUE, RED, GREEN]),
+                new UserVotes([BLUE, GREEN]),
+                new UserVotes([GREEN])
+            ]
+            voteController.acceptPopulationVotes(userVotesArray)
+
+            let result = voteController.getFinalResult()
+
+            assert.equal(result.winner, BLUE)
+        })
     })
 })

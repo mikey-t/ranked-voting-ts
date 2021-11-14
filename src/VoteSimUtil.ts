@@ -17,14 +17,27 @@ export class VoteSimUtil {
         if (minUserVotes < 0 || minUserVotes > this.voteController.options.length) {
             throw new Error('minUserVotes must be between 0 and the number of vote options')
         }
-        if (maxUserVotes < 0 || maxUserVotes > this.voteController.options.length) {
-            throw new Error('maxUserVotes must be between 0 and the number of vote options')
+        if (maxUserVotes > this.voteController.options.length) {
+            throw new Error('maxUserVotes must be less than or equal to the total number of options')
         }
         if (numVoters <=0) {
             throw new Error('numUsers must be greater than 0')
         }
         this.minUserVotes = minUserVotes
         this.maxUserVotes = maxUserVotes
+        this.numVoters = numVoters
+    }
+    
+    getNumVoters() {
+        return this.numVoters
+    }
+    
+    getMinUserVotes() {
+        return this.minUserVotes
+    }
+    
+    getMaxUserVotes() {
+        return this.maxUserVotes
     }
 
     getRandomUserVotes(): UserVotes {

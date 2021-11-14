@@ -48,8 +48,9 @@ export class VoteController {
 
         return finalResult
     }
-    
-    // Only works because we're operating on arrays where options only ever appear once
+
+    // This comparison method only works here because we're operating
+    // on arrays where options only ever appear once
     sameOptions(optionsA: string[], optionsB: string[]) {
         return optionsA.length === optionsB.length && optionsA.every(val => optionsB.includes(val))
     }
@@ -141,7 +142,7 @@ export class VoteController {
 
         return dict
     }
-    
+
     optionHasVotes(optionName: string, allVoteCounts: OptionNameToVoteCountsDict): boolean {
         let voteCounts = allVoteCounts[optionName]
         for (let count of voteCounts.voteCounts) {
