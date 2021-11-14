@@ -118,29 +118,30 @@ describe('VoteController', function () {
             assert.equal(winner, GREEN)
         })
     })
-    
-    describe('getOptionsWithVotes', function() {
-        it('returns array with unique list of options that have votes', function () {
+
+    describe('getOptionsWithRankOneVotes', function () {
+        it('returns array with unique list of options that have rank one votes', function () {
             let userVotesArray = [
                 new UserVotes([RED, BLUE]),
+                new UserVotes([RED, GREEN, BLUE]),
                 new UserVotes([BLUE])]
             let stageResult = voteController.getStageResult(userVotesArray)
 
-            let optionsWithVotes = voteController.getOptionsWithVotes(stageResult.rankedVoteCounts)
+            let optionsWithVotes = voteController.getOptionsWithRankOneVotes(stageResult.rankedVoteCounts)
 
             assert.deepEqual(optionsWithVotes, [RED, BLUE])
         })
     })
-    
-    describe('getNextStageResult', function() {
-        it('throws if losers param is empty', function() {
+
+    describe('getNextStageResult', function () {
+        it('throws if losers param is empty', function () {
             let userVotesArray = getUserVotes()
             let stageResult = voteController.getStageResult(userVotesArray)
-            
+
             assert.throws(() => voteController.getNextStageResult(stageResult, []), 'losers must be passed to generate the next StageResult')
         })
-        
-        it('returns StageResult where all UserVotes lists have had losers removed', function(){
+
+        it('returns StageResult where all UserVotes lists have had losers removed', function () {
             let firstStageVotes = [
                 new UserVotes([RED, BLUE, GREEN]),
                 new UserVotes([RED, BLUE, GREEN]),
@@ -151,11 +152,11 @@ describe('VoteController', function () {
                 new UserVotes([GREEN, RED]),
                 new UserVotes([GREEN])
             ]
-            
+
             let stageResult = voteController.getStageResult(firstStageVotes)
-            
+
             let nextStageResult = voteController.getNextStageResult(stageResult, [GREEN])
-            
+
             let expectedNextStageVotes = [
                 new UserVotes([RED, BLUE]),
                 new UserVotes([RED, BLUE]),
@@ -166,13 +167,13 @@ describe('VoteController', function () {
                 new UserVotes([RED]),
                 new UserVotes([])
             ]
-            
+
             assert.deepEqual(nextStageResult.userVotes, expectedNextStageVotes)
         })
     })
-    
-    describe('getLosers', function() {
-        it('returns single loser when there\'s no ties', function(){
+
+    describe('getLosers', function () {
+        it('returns single loser when there\'s no ties', function () {
             let userVotesArray = [
                 new UserVotes([RED, BLUE, GREEN]),
                 new UserVotes([RED, BLUE, GREEN]),
@@ -180,49 +181,128 @@ describe('VoteController', function () {
                 new UserVotes([BLUE, RED, BLUE]),
                 new UserVotes([GREEN, BLUE, RED])]
             let stageResult = voteController.getStageResult(userVotesArray)
-            
-            let losers = voteController.getLosers(stageResult.rankedVoteCounts)
-            
+
+            let losers = voteController.getLosers(stageResult)
+
             assert.deepEqual(losers, [GREEN])
         })
-        
-        it.only('returns tied losers when there\'s no tie-breaker condition', function(){
+
+        it('returns tied losers when there\'s no tie-breaker condition', function () {
             let userVotesArray = [
                 new UserVotes([RED, BLUE, GREEN]),
                 new UserVotes([RED, BLUE, GREEN]),
                 new UserVotes([BLUE, GREEN, RED]),
                 new UserVotes([GREEN, BLUE, RED])]
             let stageResult = voteController.getStageResult(userVotesArray)
-            
-            let losers = voteController.getLosers(stageResult.rankedVoteCounts)
-            
+
+            let losers = voteController.getLosers(stageResult)
+
             assert.sameMembers(losers, [GREEN, BLUE])
         })
+
+        it('returns all loser ties even if there is a tie-breaker condition, as long as the number of losers is less than total number of remaining options', function () {
+            let userVotesArray = [
+                new UserVotes([RED, BLUE, GREEN]),
+                new UserVotes([RED, BLUE, GREEN]),
+                new UserVotes([BLUE]),
+                new UserVotes([GREEN, BLUE, RED])]
+            let stageResult = voteController.getStageResult(userVotesArray)
+
+            let losers = voteController.getLosers(stageResult)
+
+            assert.sameMembers(losers, [GREEN, BLUE])
+        })
+
+        it('returns worst losers when tie-breaker condition exists and all remaining options are among the tied losers', function () {
+            let userVotesArray = [
+                new UserVotes([RED, BLUE, GREEN]),
+                new UserVotes([GREEN, BLUE, GREEN]),
+                new UserVotes([BLUE, RED, GREEN])
+            ]
+            let stageResult = voteController.getStageResult(userVotesArray)
+
+            let losers = voteController.getLosers(stageResult)
+
+            assert.sameMembers(losers, [GREEN])
+        })
+    })
+
+    describe('getRankOneVotesDict', function () {
+        it('returns correct dictionary mapping optionName to number of rank one votes', function () {
+            let userVotesArray = getUserVotes()
+            let stageResult = voteController.getStageResult(userVotesArray)
+
+            let rankOneVotesDict = voteController.getRankOneVotesDict(stageResult.rankedVoteCounts)
+
+
+        })
+    })
+
+    describe('sameOptions', function () {
+        it('returns true of same options in same order', function () {
+            let optionsA = [RED, GREEN]
+            let optionsB = [RED, GREEN]
+            
+            assert.isTrue(voteController.sameOptions(optionsA, optionsB))
+        })
         
-        // TODO:
-        // - Perfect tie between 2 options
-        // - Two way tie where 1 is worse than other and is returned
-        // - Three way tie where 1 is worse loser than other 2 and is returned
+        it('returns true of same options in different order', function () {
+            let optionsA = [RED, GREEN]
+            let optionsB = [GREEN, RED]
+            
+            assert.isTrue(voteController.sameOptions(optionsA, optionsB))
+        })
+
+        it('returns false if different options', function () {
+            let optionsA = [RED, GREEN]
+            let optionsB = [RED, BLUE]
+            
+            assert.isFalse(voteController.sameOptions(optionsA, optionsB))
+        })
+        
+        it('returns false if different number of options', function () {
+            let optionsA = [RED, GREEN]
+            let optionsB = [RED, GREEN, BLUE]
+            
+            assert.isFalse(voteController.sameOptions(optionsA, optionsB))
+        })
     })
 
     describe('getFinalResult', function () {
         it('returns populated FinalResult object with winner and one StageResult if no elimination steps are required', function () {
-            // Give red the winning scenario
-            let userVotesArray = getUserVotes()
-            userVotesArray.push(new UserVotes([RED, GREEN, BLUE]))
+            let userVotesArray = [
+                new UserVotes([RED, BLUE, GREEN]),
+                new UserVotes([GREEN, BLUE, GREEN]),
+                new UserVotes([BLUE, RED, GREEN]),
+                new UserVotes([RED, BLUE, GREEN]),
+                new UserVotes([RED])
+            ]
             voteController.acceptPopulationVotes(userVotesArray)
 
             let result = voteController.getFinalResult()
 
             assert.equal(result.winner, RED)
+            assert.equal(result.stageResults.length, 1)
         })
 
-        // it('returns FinalResult with null winner and populated tieOptions property when there\s a tie', function () {
-        // })
+        it('returns FinalResult with null winner and populated tieOptions property when there\s a tie', function () {
+            // Blue eliminated first, then red and green have no tie-breaker
+            let userVotesArray = [
+                new UserVotes([RED, BLUE, GREEN]),
+                new UserVotes([GREEN, BLUE, RED])
+            ]
+            voteController.acceptPopulationVotes(userVotesArray)
+
+            let result = voteController.getFinalResult()
+
+            assert.isNull(result.winner)
+            assert.isNotNull(result.tieOptions)
+            assert.sameMembers(result.tieOptions as string[], [RED, GREEN])
+        })
 
         // TODO:
-        // - Various real tie scenarios
+        // - Various tie scenarios
         // - Winner where tie-breaker logic applies
-
+        // - Various winners scenarios, checking intermediate stage results
     })
 })
