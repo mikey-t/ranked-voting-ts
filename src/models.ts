@@ -3,6 +3,7 @@ export class VoteOption {
 }
 
 export class UserVotes extends Array<string> {
+    /* istanbul ignore next: super() cannot be covered by istanbul */
     constructor(orderedVoteOptions: string[] = []) {
         super()
         this.push(...orderedVoteOptions)
