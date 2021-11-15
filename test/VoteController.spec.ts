@@ -59,9 +59,9 @@ describe('VoteController', function () {
             userVotes.pop()
             assert.equal(userVotes.length, 1)
             assert.equal(result.userVotes.length, 2)
-            userVotes[0].orderedVoteOptions.pop()
-            assert.equal(userVotes[0].orderedVoteOptions.length, 2)
-            assert.equal(result.userVotes[0].orderedVoteOptions.length, 3)
+            userVotes[0].pop()
+            assert.equal(userVotes[0].length, 2)
+            assert.equal(result.userVotes[0].length, 3)
         })
 
         it('returns object with correct rankedVoteCounts dictionary', function () {

@@ -59,8 +59,8 @@ describe('VoteSimUtil', function () {
             assert.equal(randomVoteArrays.length, numVoters)
             
             for (let userVotes of randomVoteArrays) {
-                assert.isAtLeast(userVotes.orderedVoteOptions.length ,minVotes)
-                assert.isAtMost(userVotes.orderedVoteOptions.length ,maxVotes)
+                assert.isAtLeast(userVotes.length ,minVotes)
+                assert.isAtMost(userVotes.length ,maxVotes)
             }
         })
     })

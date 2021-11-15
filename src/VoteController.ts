@@ -63,7 +63,7 @@ export class VoteController {
         let nextUserVotes: UserVotes[] = []
 
         for (let userVotes of currentStageResult.userVotes) {
-            let votesWithoutLosers = new UserVotes(userVotes.orderedVoteOptions.filter(option => !losers.includes(option)))
+            let votesWithoutLosers = new UserVotes(userVotes.filter(option => !losers.includes(option)))
             nextUserVotes.push(votesWithoutLosers)
         }
 
@@ -157,12 +157,12 @@ export class VoteController {
         let stageResult = new StageResult(this.options)
 
         for (let userVotes of userVotesArray) {
-            for (let i = 0; i < userVotes.orderedVoteOptions.length; i++) {
-                stageResult.rankedVoteCounts[userVotes.orderedVoteOptions[i]].addVote(i)
+            for (let i = 0; i < userVotes.length; i++) {
+                stageResult.rankedVoteCounts[userVotes[i]].addVote(i)
             }
         }
 
-        stageResult.userVotes = userVotesArray.map(v => { return new UserVotes([...v.orderedVoteOptions]) })
+        stageResult.userVotes = userVotesArray.map(v => { return new UserVotes([...v]) })
 
         return stageResult
     }

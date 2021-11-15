@@ -50,7 +50,7 @@ export class VoteSimUtil {
 
         for (let i = 0; i < numVotes; i++) {
             const choiceIndex = this.getRandomInt(0, possibleOptions.length - 1)
-            userVotes.orderedVoteOptions.push(possibleOptions[choiceIndex])
+            userVotes.push(possibleOptions[choiceIndex])
             possibleOptions.splice(choiceIndex, 1)
         }
 

@@ -15,10 +15,10 @@ describe('Model tests', function() {
     
     describe('UserVotes model', function() {
         describe('UserVotes ctor', function() {
-            it('initializes orderedVoteOptions to empty array', function() {
+            it('initializes to empty array', function() {
                 let userVotes = new UserVotes()
-                assert.isDefined(userVotes.orderedVoteOptions, 'orderedVoteOptions should be defined')
-                assert.isEmpty(userVotes.orderedVoteOptions, 'orderedVoteOptions should be empty')
+                assert.isDefined(userVotes, 'should be defined')
+                assert.isEmpty(userVotes, 'should be empty')
             })
         })
     })

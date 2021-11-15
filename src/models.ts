@@ -2,11 +2,10 @@ export class VoteOption {
     constructor(public name: string) { }
 }
 
-export class UserVotes {
-    orderedVoteOptions: string[] = []
-
+export class UserVotes extends Array<string> {
     constructor(orderedVoteOptions: string[] = []) {
-        this.orderedVoteOptions = orderedVoteOptions
+        super()
+        this.push(...orderedVoteOptions)
     }
 }
 
