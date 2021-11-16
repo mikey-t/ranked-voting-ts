@@ -17,7 +17,6 @@
     "clean": "gulp clean",
     "pack": "gulp pack",
     "tsc": "tsc",
-    "prepack": "gulp build",
     "prepublish": "gulp build"
   },
   "keywords": [],
