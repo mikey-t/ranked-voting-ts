@@ -68,11 +68,13 @@ The basic idea is that we're eliminating candidates with the fewest first-choice
 
 At a high level this concept is extremely simple. There are situations where tie-breaker logic is required, and ultimately a real tie is possible, although the larger the voter population, the more unlikely a tie is.
 
-Tie conditions:
-- First choice votes have an exact 50% tie between two candidates
+**Tie conditions**:
+- When attempting to find a winner, which means at any stage when all candidates have greater than 0 first choice votes and every candidate has exactly the same number of first choice votes
+  - Example 1: 2 candidates each have 50% first choice votes, all other candidates have previously been eliminated
+  - Example 2: 3 candidates each have exactly 1/3 first choice votes, all other candidates have previously been eliminated
 - When attempting to eliminate a candidate with fewest first choice votes, there is a tie for "worst loser" - this scenario is actually irrelevant (explanation below)
 
-Tie-breaker logic: run a scenario where you eliminate each tied candidate and tally how many first choice votes each candidate would get and total them across scenarios. If there's still an exact tie when the tie is checking for winner, it's an actual tie for the entire race. Checking for ties for worst loser isn't actually required. If there's a tie for worst loser, you simply eliminate all candidates tied for worst loser.
+**Tie-breaker logic**: run a scenario where you eliminate each tied candidate and tally how many first choice votes each candidate would get and total them across scenarios. If there's still an exact tie when evaluating the results/totals for these scenarios, and the set of tied candidates is all the remaining candidates with greater than 0 first choice votes, then it's an actual tie for the entire race. If the tie is between a subset of candidates then all remaining with greater than 0 first choice votes, then checking for ties for worst loser isn't actually required. In this scenario (subset of candidates tied for worst loser) you simply eliminate all candidates tied for worst loser.
 
 ## Decisions
 
