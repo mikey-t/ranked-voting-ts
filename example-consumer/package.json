@@ -1,0 +1,13 @@
+{
+  "name": "example-ranked-voting-consumer",
+  "version": "1.0.0",
+  "description": "Example ranked-voting consumer",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {},
+  "author": "Mike Thompson",
+  "license": "ISC",
+  "dependencies": {
+    "ranked-voting": "0.0.1"
+  }
+}

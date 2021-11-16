@@ -8,7 +8,37 @@ My wife and I experimented with creating ranked choice voting functionality in P
 
 ## Npm Module Usage
 
-`throw new NotImplementedException()`
+In your node project, run `npm i @mikeyt23/ranked-voting`.
+
+Example usage:
+
+```JavaScript
+import { UserVotes, VoteOption, VoteController } from 'ranked-voting'
+
+const voteController = new VoteController([
+  new VoteOption('spring'),
+  new VoteOption('summer'),
+  new VoteOption('fall'),
+  new VoteOption('winter')
+])
+
+voteController.acceptUserVotes(new UserVotes(['spring', 'summer']))
+voteController.acceptUserVotes(new UserVotes(['fall', 'spring']))
+voteController.acceptUserVotes(new UserVotes(['fall', 'winter']))
+voteController.acceptUserVotes(new UserVotes(['summer', 'spring']))
+voteController.acceptUserVotes(new UserVotes(['summer', 'winter']))
+
+const result = voteController.getFinalResult()
+
+if (result.winner !== null) {
+  console.log(`${result.winner} won after ${result.stageResults.length - 1} stages`)
+} else {
+  console.log(`tie between ${result.tieOptions.join(', ')}`)
+}
+
+```
+
+If this were in a file called `index.js` you would run this with `node index.js` and should see output similar to `summer won after 2 stages`.
 
 ## Project Commands
 
