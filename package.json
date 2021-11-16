@@ -1,6 +1,6 @@
 {
   "name": "ranked-voting",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Ranked choice voting library",
   "repository": {
     "type": "git",
