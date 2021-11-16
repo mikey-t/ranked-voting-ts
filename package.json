@@ -33,7 +33,8 @@
       "coverage",
       "src/index.ts",
       "src/example.ts",
-      "gulpfile.js"
+      "gulpfile.js",
+      "example-consumer/*"
     ],
     "reporter": [
       "html",
