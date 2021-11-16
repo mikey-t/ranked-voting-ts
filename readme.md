@@ -8,7 +8,7 @@ My wife and I experimented with creating ranked choice voting functionality in P
 
 ## Npm Module Usage
 
-In your node project, run `npm i @mikeyt23/ranked-voting`.
+In your node project, run `npm i ranked-voting`.
 
 Example usage:
 
