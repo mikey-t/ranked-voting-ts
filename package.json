@@ -1,6 +1,6 @@
 {
   "name": "ranked-voting",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Ranked choice voting library",
   "repository": {
     "type": "git",
@@ -42,18 +42,18 @@
     "all": true
   },
   "devDependencies": {
-    "@types/chai": "^4.2.22",
-    "@types/mocha": "^9.0.0",
-    "@types/node": "^16.11.1",
-    "chai": "^4.3.4",
-    "fs-extra": "^10.0.0",
+    "@types/chai": "^4.3.9",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^16.18.60",
+    "chai": "^4.3.10",
+    "fs-extra": "^10.1.0",
     "gulp": "^4.0.2",
-    "mocha": "^9.1.2",
+    "mocha": "^9.2.2",
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.4.4"
+    "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@mikeyt23/node-cli-utils": "^1.0.0"
+    "@mikeyt23/node-cli-utils": "^1.4.1"
   }
 }

@@ -8,6 +8,6 @@
   "author": "Mike Thompson",
   "license": "ISC",
   "dependencies": {
-    "ranked-voting": "0.0.2"
+    "ranked-voting": "0.0.4"
   }
 }
